@@ -1,0 +1,33 @@
+{
+  "info": {
+    "_postman_id": "llm-api-collection-001",
+    "name": "LLM API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Generate (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prompt\": \"Hello, world!\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/generate",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["generate"]
+        }
+      },
+      "response": []
+    }
+  ]
+} 
