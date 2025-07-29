@@ -3,4 +3,7 @@ uvicorn
 pydantic
 pydantic-settings
 python-dotenv
-requests 
+requests
+httpx
+slowapi
+cachetools 

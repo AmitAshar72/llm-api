@@ -12,36 +12,12 @@ class LLMBackend(ABC):
         self.logger = logging.getLogger(f"{__name__}.{name}")
     
     @abstractmethod
-    def generate(self, prompt: str, **kwargs) -> str:
-        """
-        Generate a response for the given prompt.
-        
-        Args:
-            prompt: The input prompt
-            **kwargs: Additional parameters specific to the backend
-            
-        Returns:
-            The generated response text
-            
-        Raises:
-            BackendError: If the backend fails to generate a response
-        """
+    async def generate(self, prompt: str, **kwargs) -> str:
         pass
     
-    def is_available(self) -> bool:
-        """
-        Check if the backend is available and ready to use.
-        
-        Returns:
-            True if the backend is available, False otherwise
-        """
-        try:
-            # Try a simple test generation
-            test_response = self.generate("test")
-            return bool(test_response and test_response.strip())
-        except Exception as e:
-            self.logger.warning(f"Backend {self.name} is not available: {e}")
-            return False
+    @abstractmethod
+    async def is_available(self) -> bool:
+        pass
 
 class BackendError(Exception):
     """Base exception for backend errors."""

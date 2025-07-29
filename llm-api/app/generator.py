@@ -6,26 +6,23 @@ from .config import settings
 
 logger = logging.getLogger(__name__)
 
-def generate_response(prompt: str, backend_type: Optional[str] = None) -> str:
+async def generate_response(prompt: str, backend_type: Optional[str] = None) -> str:
     print(f"[GENERATOR] Called with prompt: {prompt}")
     try:
-        # Get the backend instance
         backend = BackendFactory.get_backend()
         print(f"[GENERATOR] Using backend: {backend.name}")
         logger.info(f"Using backend: {backend.name}")
         logger.debug(f"Generating response for prompt: {prompt[:100]}...")
-        # Generate the response
-        response = backend.generate(prompt)
+        response = await backend.generate(prompt)
         print(f"[GENERATOR] Backend response: {response}")
         logger.debug(f"Generated response length: {len(response)}")
         return response
     except BackendError as e:
         print(f"[GENERATOR] BackendError: {e}")
         logger.error(f"Backend error: {e}")
-        # Fallback to stub backend
         try:
             stub_backend = BackendFactory.get_backend(settings.BackendType.STUB)
-            fallback_response = stub_backend.generate(prompt)
+            fallback_response = await stub_backend.generate(prompt)
             print(f"[GENERATOR] Fallback to stub backend: {fallback_response}")
             logger.warning(f"Falling back to stub backend: {fallback_response}")
             return fallback_response
